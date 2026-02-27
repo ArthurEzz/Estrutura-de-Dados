@@ -1,0 +1,136 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <locale.h>
+
+#define MAX 100
+
+typedef struct {
+    char nome[50];
+    char apelido[30];
+    int nota;
+    int vitoria;
+} Aluno;
+
+Aluno turma[MAX];
+int totalAlunos = 0;
+
+
+// Função para cadastrar aluno
+void cadastrar() {
+    if (totalAlunos >= MAX) {
+        printf("Limite de alunos atingido!\n");
+        return;
+    }
+
+    printf("\n--- Cadastro de Aluno ---\n");
+
+    printf("Nome: ");
+    fgets(turma[totalAlunos].nome, 50, stdin);
+    // fgets() lê texto (string) do teclado ou de arquivo e é mais segura que scanf("%s").
+    turma[totalAlunos].nome[strcspn(turma[totalAlunos].nome, "\n")] = '\0';
+
+    printf("Apelido: ");
+    fgets(turma[totalAlunos].apelido, 30, stdin);
+    turma[totalAlunos].apelido[strcspn(turma[totalAlunos].apelido, "\n")] = '\0';
+
+    printf("Nota: ");
+    scanf("%d", &turma[totalAlunos].nota);
+    getchar(); // limpa buffer
+
+    printf("Quantidade de vitorias: ");
+    scanf("%d", &turma[totalAlunos].vitoria);
+    getchar(); // limpa buffer
+
+    totalAlunos++;
+    printf("Aluno cadastrado com sucesso!\n");
+}
+
+// Função para listar alunos
+void listar() {
+    if (totalAlunos == 0) {
+        printf("\nNenhum aluno cadastrado.\n");
+        return;
+    }
+
+    printf("\n--- Lista de Alunos ---\n");
+
+    for (int i = 0; i < totalAlunos; i++) {
+        printf("%d - %s | Apelido: %s | Nota: %d | Vitorias: %d",
+        i + 1, turma[i].nome, turma[i].apelido, turma[i].nota, turma[i].vitoria);
+
+
+        if (turma[i].nota >= 6)
+            printf(" | Aprovado\n");
+        else
+            printf(" | Reprovado\n");
+    }
+}
+
+// Função para calcular média
+void mediaTurma() {
+    if (totalAlunos == 0) {
+        printf("\nNenhum aluno cadastrado.\n");
+        return;
+    }
+
+    float soma = 0;
+
+    for (int i = 0; i < totalAlunos; i++) {
+        soma += turma[i].nota;
+    }
+
+    printf("\nMedia da turma: %.2f\n", soma / totalAlunos);
+}
+
+void maiorPonto() {
+    int maior = 0;
+    for (int i = 0; i < totalAlunos; i++) {
+        if (turma[i].nota >= turma[maior].nota) {
+            maior = i;
+        }
+    }
+    printf("%s | Apelido: %s | Nota: %d \n\n",
+    turma[maior].nome, turma[maior].apelido, turma[maior].nota);
+}
+
+int main() {
+    setlocale(LC_ALL, "");
+    int opcao;
+
+    do {
+        printf("\n===== SISTEMA DE ALUNOS =====\n");
+        printf("1 - Cadastrar aluno\n");
+        printf("2 - Listar alunos\n");
+        printf("3 - Media da turma\n");
+        printf("4 - Maior Pontuacao\n");
+        printf("5 - Sair\n");
+        printf("Escolha uma opcao: ");
+        scanf("%d", &opcao);
+        getchar(); // limpa buffer
+
+        switch(opcao) {
+            case 1:
+                cadastrar();
+                break;
+            case 2:
+                listar();
+                break;
+            case 3:
+                mediaTurma();
+                break;
+            case 4:
+                printf("\n===== ALUNO COM MAIOR PONTUACAO =====\n");
+                maiorPonto();
+                break;
+            case 5:
+                printf("Encerrando sistema...\n");
+                break;
+            default:
+                printf("Opcao invalida!\n");
+        }
+
+    } while(opcao != 5);
+
+    return 0;
+}
