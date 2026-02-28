@@ -8,7 +8,7 @@
 typedef struct {
     char nome[50];
     char apelido[30];
-    int nota;
+    int pontucao;
     int vitoria;
 } Aluno;
 
@@ -34,8 +34,8 @@ void cadastrar() {
     fgets(turma[totalAlunos].apelido, 30, stdin);
     turma[totalAlunos].apelido[strcspn(turma[totalAlunos].apelido, "\n")] = '\0';
 
-    printf("Nota: ");
-    scanf("%d", &turma[totalAlunos].nota);
+    printf("Pontuacao: ");
+    scanf("%d", &turma[totalAlunos].pontucao);
     getchar(); // limpa buffer
 
     printf("Quantidade de vitorias: ");
@@ -56,11 +56,11 @@ void listar() {
     printf("\n--- Lista de Alunos ---\n");
 
     for (int i = 0; i < totalAlunos; i++) {
-        printf("%d - %s | Apelido: %s | Nota: %d | Vitorias: %d",
-        i + 1, turma[i].nome, turma[i].apelido, turma[i].nota, turma[i].vitoria);
+        printf("%d - %s | Apelido: %s | Pontucao: %d | Vitorias: %d",
+        i + 1, turma[i].nome, turma[i].apelido, turma[i].pontucao, turma[i].vitoria);
 
 
-        if (turma[i].nota >= 6)
+        if (turma[i].pontucao >= 6)
             printf(" | Aprovado\n");
         else
             printf(" | Reprovado\n");
@@ -77,7 +77,7 @@ void mediaTurma() {
     float soma = 0;
 
     for (int i = 0; i < totalAlunos; i++) {
-        soma += turma[i].nota;
+        soma += turma[i].pontucao;
     }
 
     printf("\nMedia da turma: %.2f\n", soma / totalAlunos);
@@ -86,12 +86,12 @@ void mediaTurma() {
 void maiorPonto() {
     int maior = 0;
     for (int i = 0; i < totalAlunos; i++) {
-        if (turma[i].nota >= turma[maior].nota) {
+        if (turma[i].pontucao >= turma[maior].pontucao) {
             maior = i;
         }
     }
-    printf("%s | Apelido: %s | Nota: %d \n\n",
-    turma[maior].nome, turma[maior].apelido, turma[maior].nota);
+    printf("Nome: %s | Apelido: %s | Pontucao: %d \n\n",
+    turma[maior].nome, turma[maior].apelido, turma[maior].pontucao);
 }
 
 int main() {
