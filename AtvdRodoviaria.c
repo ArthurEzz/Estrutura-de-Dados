@@ -323,6 +323,8 @@ int main() {
                     }while (opcaoEU != 1);
                     break;
 
+            // hora do efetuar a compra da passagem
+                
                 case 4:
                     if (onibusEscolhido < 1 || onibusEscolhido > 5) {
                         printf("\nVoce ainda nao escolheu nenhum onibus para viajar.\n");
